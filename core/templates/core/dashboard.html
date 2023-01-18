@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+
+
+<head>
+
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Dashboard</title>
+
+	<link rel="stylesheet" href="{% static 'core/bootstrap.min.css' %}">
+
+</head>
+
+
+
+<body>
+
+	<header class="d-flex align-items-center justify-content-between p-3 bg-light">
+
+		<h5>SHORTENER</h5>
+
+		{% if request.user.is_authenticated %}
+
+		<div>
+
+			<a href="{% url 'core:index' %}" class="btn btn-primary btn-sm mx-1">Home</a>
+
+			<a href="{% url 'accounts:signout' %}" class="btn btn-primary btn-sm mx-1">Logout</a>
+
+		</div>
+
+		{% else %}
+
+		<div class="me-3">
+
+			<a href="{% url 'accounts:signin' %}" class="btn btn-primary btn-sm mx-1">Login</a>
+
+			<a href="{% url 'accounts:signup' %}" class="btn btn-primary btn-sm mx-1">Signup</a>
+
+		</div>
+
+		{% endif %}
+
+	</header>
+
+
+
+	<div class="container p-5">
+
+		<h2>Your sites</h2>
+
+		<hr>
+
+		{% if urls %}
+
+		<ul class="list-unstyled">
+
+			{% for url in urls %}
+
+			<li>
+
+				<a class="text-decoration-none" href="{% url 'core:url_stats' request.user.username url.unique_id %}">localhost:8000/{{ url.unique_id }} &RightArrow;</a>
+
+				<span class="small opacity-50 d-block">{{ url.url }}</span>
+				{% if url.clicks %}
+				<span class="small">{{url.clicks}} {% if url.clicks == 1 %}click{% else %}clicks{% endif %}</span>
+				{% else %}
+				<span class="small">0 clicks</span>
+				{% endif %}
+
+				<hr>
+
+			</li>
+
+			{% endfor %}
+
+		</ul>
+
+		{% endif %}
+
+	</div>
+
+
+
+</body>
+
+
+
+</html>

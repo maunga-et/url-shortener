@@ -1,0 +1,95 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+
+
+<head>
+
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Dashboard</title>
+
+	<link rel="stylesheet" href="{% static 'core/bootstrap.min.css' %}">
+
+</head>
+
+
+
+<body>
+
+	<header class="d-flex align-items-center justify-content-between p-3 bg-light">
+
+		<h5>SHORTENER</h5>
+
+		{% if request.user.is_authenticated %}
+
+		<div>
+
+			<a href="{% url 'core:index' %}" class="btn btn-primary btn-sm mx-1">Home</a>
+
+			<a href="{% url 'accounts:signout' %}" class="btn btn-primary btn-sm mx-1">Logout</a>
+
+		</div>
+
+		{% else %}
+
+		<div class="me-3">
+
+			<a href="{% url 'accounts:signin' %}" class="btn btn-primary btn-sm mx-1">Login</a>
+
+			<a href="{% url 'accounts:signup' %}" class="btn btn-primary btn-sm mx-1">Signup</a>
+
+		</div>
+
+		{% endif %}
+
+	</header>
+
+
+
+	<div class="container p-5">
+
+		<h2>
+
+            Statistics for {{ url }}
+
+        </h2>
+
+		<hr>
+
+		{% if clicks_data %}
+
+		<ul class="list-unstyled">
+
+			{% for click_data in clicks_data %}
+
+			<li>
+
+				<span class="opacity-75 d-block h4">Visitor IP Address &RightArrow; {{ click_data.ip_address }}</span>
+
+                <span class="opacity-50 d-block small">{{ click_data.timestamp }}</span>
+
+				<hr>
+
+			</li>
+
+			{% endfor %}
+
+		</ul>
+
+		{% endif %}
+
+	</div>
+
+
+
+</body>
+
+
+
+</html>

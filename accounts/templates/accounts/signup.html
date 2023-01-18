@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Register | URL SHORTENER</title>
+	<link rel="stylesheet" href="{% static 'core/bootstrap.min.css' %}">
+</head>
+<body>
+    <div style="height: 100vh;" class="d-flex justify-content-center align-items-center">
+    	<form method="post" style="width: 300px;" class="p-4 border rounded shadow bg-light">
+    		{% csrf_token %}
+    		<h1 class="mb-4 opacity-75">Signup</h1>
+    		<div class="mb-3">
+    			<label for="username" class="d-none">Username</label>
+    			<input id="username" class="form-control" type="text" name="username" placeholder="Username" required>
+    		</div>
+    		<div class="mb-3">
+    			<label for="email" class="d-none">Email</label>
+    			<input id="email" class="form-control" type="email" name="email" placeholder="Email" required>
+    		</div>
+    		<div class="mb-3">
+    			<label id="password" class="d-none">Password</label>
+    			<input id="password" class="form-control" type="password" name="password" placeholder="Password" required>
+    		</div>
+    		<div class="mb-3">
+    			<label id="password1" class="d-none">Confirm password</label>
+    			<input id="password1" class="form-control" type="password" name="password1" placeholder="Confirm password" required>
+    		</div>
+    		{% if messages %}
+    			<div>
+    				<ul class="list-unstyled">
+    					{% for message in messages %}
+    						<li {% if message.tags %} class="{{message.tags}}" {% endif %}>
+								<div class="alert alert-info small">
+									{{ message }}
+								</div>
+							</li>
+    					{% endfor %}
+    				</ul>
+    			</div>
+    		{% endif %}
+    		<div>
+    			<button class="btn btn-primary w-100" type="submit">Register</button>
+    		</div>
+			<div class="my-2">
+				<p class="small">
+					Already have an account? <a href="{% url 'accounts:signin' %}" class="text-decoration-none">Login</a>
+				</p>
+			</div>
+    	</form>
+    </div>
+</body>
+</html>

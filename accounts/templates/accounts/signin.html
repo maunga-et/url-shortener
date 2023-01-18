@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login | URL SHORTENER</title>
+	<link rel="stylesheet" href="{% static 'core/bootstrap.min.css' %}">
+</head>
+<body>
+    <div style="height: 100vh;" class="d-flex justify-content-center align-items-center">
+    	<form method="post" style="width: 300px;" class="border p-4 rounded bg-light shadow">
+    		{% csrf_token %}
+    		<h1 class="mb-4 opacity-75">Login</h1>
+    		<div class="mb-3">
+    			<label for="username" class="d-none">Username</label>
+    			<input id="username" type="text" name="username" placeholder="Username" class="form-control" required>
+    		</div>
+    		<div class="mb-3">
+    			<label id="password" class="d-none">Password</label>
+    			<input id="password" type="password" name="password" placeholder="Password" class="form-control" required>
+    		</div>
+    		{% if messages %}
+				<div>
+					<ul class="list-unstyled">
+						{% for message in messages %}
+							<li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+								<div class="alert alert-info small">{{ message }}</div>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+    		{% endif %}
+    		<div>
+    			<button class="btn btn-primary w-100" type="submit">Login</button>
+    		</div>
+
+			<input type="hidden" name="next" value="{{ next }}">
+
+			<div class="my-2">
+				<a href="{% url 'accounts:signup' %}" class="text-decoration-none small">Create an account</a>
+			</div>
+    	</form>
+    </div>
+</body>
+</html>

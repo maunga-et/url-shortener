@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>URL SHORTENER</title>
+
+	<link rel="stylesheet" type="text/css" href="{% static 'core/styles.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'core/bootstrap.min.css' %}">
+
+	
+
+</head>
+
+<body>
+
+    <header class="d-flex align-items-center justify-content-between p-3 bg-light">
+
+    	<h5>SHORTENER</h5>
+
+    	{% if request.user.is_authenticated %}
+
+    		<div>
+
+    			<a href="{% url 'core:dashboard' request.user.username %}" class="btn btn-primary btn-sm mx-1">Dashboard</a>
+
+    			<a href="{% url 'accounts:signout' %}" class="btn btn-primary btn-sm mx-1">Logout</a>
+
+    		</div>
+
+    	{% else %}
+
+    		<div class="me-3">
+
+    			<a href="{% url 'accounts:signin' %}" class="btn btn-primary btn-sm mx-1">Login</a>
+
+    			<a href="{% url 'accounts:signup' %}" class="btn btn-primary btn-sm mx-1">Signup</a>
+
+    		</div>
+
+    	{% endif %}
+
+    </header>
+
+
+
+    <div id="form-div" class="d-flex flex-column justify-content-center align-items-center">
+		<div id="notification" class="d-none alert small" style="width: 300px;"></div>
+    	<form id="form">
+			{% if messages %}
+				{% for message in messages %}
+					<p {% if message.tags %} class="{{message.tags}} small"{% endif %}>{{ message }}</p>
+				{% endfor %}
+			{% endif %}
+			<input type="text" name="url" id="url" class="form-control mb-3" placeholder="e.g. google.com">
+			<button type="submit" class="btn btn-primary w-100"><span class="btn-text">Shorten url</span><span class="spinner-span" role="status"></span></button>
+		</form>
+
+    </div>
+
+	<script src="{% static 'core/scripts.js' %}"></script>
+
+</body>
+
+</html>
